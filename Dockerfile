@@ -12,6 +12,9 @@ FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# Ensure public exists even when empty to avoid COPY failures in runner
+RUN mkdir -p /app/public
+
 # Pass build-time env vars if needed (non-secret only)
 # ARG NEXT_PUBLIC_API_URL
 # ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
