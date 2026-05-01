@@ -9,7 +9,7 @@ import { VertexService } from "@/core/services/ai/vertex.service";
 const vertexService = new VertexService();
 
 const schema = z.object({
-  content: z.string().min(5),
+  content: z.string().trim().min(5).max(2000),
 });
 
 export const POST = asyncHandler(async (req: Request) => {

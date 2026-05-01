@@ -11,7 +11,7 @@ const vertexService = new VertexService();
 const schema = z.object({
   age: z.number().min(18).max(120),
   isFirstTimeVoter: z.boolean(),
-  location: z.string().min(2),
+  location: z.string().trim().min(2).max(120),
 });
 
 export const POST = asyncHandler(async (req: Request) => {

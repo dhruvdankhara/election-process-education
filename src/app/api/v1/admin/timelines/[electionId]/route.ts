@@ -6,8 +6,8 @@ import { requireAdminSession } from "@/core/auth/authorization";
 import { electionDataService } from "@/modules/election/service/election-data.service";
 
 const schema = z.object({
-  title: z.string().min(2),
-  description: z.string().min(2),
+  title: z.string().trim().min(2).max(120),
+  description: z.string().trim().min(2).max(2000),
   isDummy: z.boolean().default(false),
 });
 

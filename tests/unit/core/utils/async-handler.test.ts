@@ -84,6 +84,31 @@ describe("asyncHandler", () => {
     );
   });
 
+  it("should reject cross-site mutating requests", async () => {
+    const handler = async () => NextResponse.json({ ok: true });
+    const wrappedHandler = asyncHandler(handler);
+    const crossSiteRequest = new Request("http://localhost/api", {
+      method: "POST",
+      headers: {
+        "sec-fetch-site": "cross-site",
+        origin: "https://evil.example",
+      },
+    });
+
+    await wrappedHandler(crossSiteRequest);
+
+    expect(NextResponse.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: {
+          code: "FORBIDDEN",
+          message: "Cross-site requests are not allowed",
+        },
+      }),
+      { status: 403 }
+    );
+  });
+
   it("should handle generic Errors and return 500 Internal Server Error", async () => {
     const handler = async () => {
       throw new Error("Unexpected crash");

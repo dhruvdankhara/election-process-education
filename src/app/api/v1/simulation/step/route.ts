@@ -6,8 +6,8 @@ import { requireAuthSession } from "@/core/auth/authorization";
 import { fallbackAiService } from "@/core/services/ai/fallback.service";
 
 const schema = z.object({
-  stepId: z.string().min(1),
-  response: z.string().min(1),
+  stepId: z.string().trim().min(1).max(64),
+  response: z.string().trim().min(1).max(1000),
 });
 
 export const POST = asyncHandler(async (req: Request) => {

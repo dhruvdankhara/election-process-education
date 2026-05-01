@@ -88,13 +88,14 @@ export function MainNav({ isLoggedIn, isAdmin }: MainNavProps) {
 
   return (
     <>
-      <nav className="hidden items-center gap-2 md:flex">
+      <nav className="hidden items-center gap-2 md:flex" aria-label="Primary">
         <NavigationMenu>
           <NavigationMenuList>
             {routes.map((route) => (
               <NavigationMenuItem key={route.href}>
                 <Link href={route.href} legacyBehavior passHref>
                   <NavigationMenuLink
+                    aria-current={route.active ? "page" : undefined}
                     className={cn(
                       navigationMenuTriggerStyle(),
                       "bg-transparent font-medium transition-colors hover:bg-muted/50",
@@ -118,24 +119,28 @@ export function MainNav({ isLoggedIn, isAdmin }: MainNavProps) {
           <Button
             variant="ghost"
             className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+            aria-expanded={isOpen}
+            aria-controls="mobile-nav"
+            aria-label="Toggle navigation menu"
           >
             <Menu className="h-6 w-6" aria-hidden="true" />
             <span className="sr-only">Toggle Menu</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="pr-0">
+        <SheetContent side="left" className="pr-0" id="mobile-nav" aria-label="Mobile navigation">
           <SheetHeader className="px-6 pb-4 text-left">
             <SheetTitle className="flex items-center gap-2 text-xl font-bold">
               <Vote className="h-6 w-6 text-primary" aria-hidden="true" />
               VoteWise Guide
             </SheetTitle>
           </SheetHeader>
-          <div className="flex flex-col gap-4 overflow-y-auto px-6 pb-20 pt-4">
+          <nav className="flex flex-col gap-4 overflow-y-auto px-6 pb-20 pt-4" aria-label="Mobile">
             <div className="flex flex-col gap-2">
               {routes.map((route) => (
                 <Link
                   key={route.href}
                   href={route.href}
+                  aria-current={route.active ? "page" : undefined}
                   onClick={() => setIsOpen(false)}
                   className={cn(
                     "flex items-center justify-between rounded-md p-2 text-sm font-medium transition-colors hover:bg-muted hover:text-primary",
@@ -150,7 +155,7 @@ export function MainNav({ isLoggedIn, isAdmin }: MainNavProps) {
                 </Link>
               ))}
             </div>
-          </div>
+          </nav>
         </SheetContent>
       </Sheet>
     </>

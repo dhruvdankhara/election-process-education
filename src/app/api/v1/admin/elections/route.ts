@@ -6,11 +6,11 @@ import { requireAdminSession } from "@/core/auth/authorization";
 import { electionDataService } from "@/modules/election/service/election-data.service";
 
 const schema = z.object({
-  title: z.string().min(2),
-  country: z.string().min(2),
-  state: z.string().min(2),
-  type: z.string().min(2),
-  description: z.string().min(2),
+  title: z.string().trim().min(2).max(120),
+  country: z.string().trim().min(2).max(80),
+  state: z.string().trim().min(2).max(80),
+  type: z.string().trim().min(2).max(80),
+  description: z.string().trim().min(2).max(2000),
 });
 
 export const GET = asyncHandler(async () => {

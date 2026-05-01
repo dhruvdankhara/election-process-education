@@ -10,8 +10,8 @@ const profileRepository = new UserProfileRepository();
 const profileSchema = z.object({
   age: z.number().min(18).max(120),
   isFirstTimeVoter: z.boolean(),
-  location: z.string().min(2),
-  preferredLanguage: z.string().min(2).default("en"),
+  location: z.string().trim().min(2).max(120),
+  preferredLanguage: z.string().trim().min(2).max(10).default("en"),
   voiceEnabled: z.boolean().default(false),
 });
 

@@ -9,7 +9,7 @@ const progressRepository = new ProgressRepository();
 
 const updateSchema = z
   .object({
-    journeyId: z.string().min(1),
+    journeyId: z.string().trim().min(1).max(128),
     completedSteps: z.number().int().min(0),
     totalSteps: z.number().int().min(1),
   })

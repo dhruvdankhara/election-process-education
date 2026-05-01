@@ -9,14 +9,15 @@ import { VertexService } from "@/core/services/ai/vertex.service";
 const vertexService = new VertexService();
 
 const schema = z.object({
-  message: z.string().min(1),
+  message: z.string().trim().min(1).max(2000),
   context: z
     .array(
       z.object({
         role: z.enum(["user", "assistant"]),
-        message: z.string(),
+        message: z.string().trim().min(1).max(2000),
       })
     )
+    .max(20)
     .optional()
     .default([]),
 });

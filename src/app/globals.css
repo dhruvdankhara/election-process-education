@@ -152,7 +152,7 @@
 }
 
 /* Accessibility focus styles */
-:focus {
+:focus:not(:focus-visible) {
   outline: none;
 }
 

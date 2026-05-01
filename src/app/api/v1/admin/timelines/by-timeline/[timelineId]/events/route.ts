@@ -6,10 +6,10 @@ import { requireAdminSession } from "@/core/auth/authorization";
 import { electionDataService } from "@/modules/election/service/election-data.service";
 
 const eventSchema = z.object({
-  title: z.string().min(2),
-  description: z.string().min(2),
-  date: z.string().min(4),
-  type: z.string().min(2),
+  title: z.string().trim().min(2).max(120),
+  description: z.string().trim().min(2).max(2000),
+  date: z.string().trim().min(4).max(40),
+  type: z.string().trim().min(2).max(80),
   importance: z.enum(["low", "medium", "high", "critical"]),
 });
 

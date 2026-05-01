@@ -7,11 +7,11 @@ import { electionDataService } from "@/modules/election/service/election-data.se
 
 const patchSchema = z
   .object({
-    title: z.string().min(2).optional(),
-    country: z.string().min(2).optional(),
-    state: z.string().min(2).optional(),
-    type: z.string().min(2).optional(),
-    description: z.string().min(2).optional(),
+    title: z.string().trim().min(2).max(120).optional(),
+    country: z.string().trim().min(2).max(80).optional(),
+    state: z.string().trim().min(2).max(80).optional(),
+    type: z.string().trim().min(2).max(80).optional(),
+    description: z.string().trim().min(2).max(2000).optional(),
   })
   .refine((data) => Object.keys(data).length > 0, "At least one field required");
 

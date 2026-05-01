@@ -6,7 +6,7 @@ import { fallbackAiService } from "@/core/services/ai/fallback.service";
 import { electionDataService } from "@/modules/election/service/election-data.service";
 
 const schema = z.object({
-  electionId: z.string().min(1),
+  electionId: z.string().trim().min(1).max(128),
 });
 
 export const POST = asyncHandler(async (req: Request) => {

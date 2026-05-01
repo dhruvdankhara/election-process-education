@@ -12,6 +12,19 @@ export const asyncHandler =
   <TArgs extends unknown[]>(handler: NextRouteHandler<TArgs>) =>
   async (req: Request, ...args: TArgs) => {
     try {
+      const isMutatingMethod = ["POST", "PUT", "PATCH", "DELETE"].includes(req.method);
+      if (isMutatingMethod) {
+        const fetchSite = req.headers.get("sec-fetch-site");
+        if (fetchSite === "cross-site") {
+          throw new ApiError("FORBIDDEN", "Cross-site requests are not allowed", 403);
+        }
+
+        const origin = req.headers.get("origin");
+        if (origin && origin !== new URL(req.url).origin) {
+          throw new ApiError("FORBIDDEN", "Origin mismatch", 403);
+        }
+      }
+
       return await handler(req, ...args);
     } catch (error: unknown) {
       console.error("API Error:", error);
