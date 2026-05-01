@@ -8,7 +8,7 @@ jest.mock("@/core/auth/auth", () => ({
   auth: jest.fn(),
 }));
 
-// This integration test verifies that the authorization module properly integrates with 
+// This integration test verifies that the authorization module properly integrates with
 // the broader core logic and handles mocked real-world API request scenarios.
 describe("Authorization Integration", () => {
   beforeEach(() => {

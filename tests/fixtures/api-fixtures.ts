@@ -1,4 +1,6 @@
-import { test as base, APIRequestContext, expect } from '@playwright/test';
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { test as base, APIRequestContext, expect } from "@playwright/test";
 
 // Define custom fixtures
 type MyFixtures = {
@@ -12,7 +14,7 @@ export const test = base.extend<MyFixtures>({
     // You can set up global headers or tokens here
     await use(request);
   },
-  
+
   // Custom Auth Helper
   authHelper: async ({ request }, use) => {
     const helper = {
@@ -21,11 +23,11 @@ export const test = base.extend<MyFixtures>({
         // const res = await request.post('/api/v1/auth/login', { data: { username: 'test', password: 'password' } });
         // const { token } = await res.json();
         // return token;
-        return 'mock_token_123';
-      }
+        return "mock_token_123";
+      },
     };
     await use(helper);
-  }
+  },
 });
 
 export { expect };

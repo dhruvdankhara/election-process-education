@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { logger } from "../utils/logger";
 
 const emptyStringToUndefined = (value: unknown) => {
   if (typeof value === "string" && value.trim().length === 0) {
@@ -77,10 +78,14 @@ const parsedEnv = envSchema.safeParse({
   ADMIN_EMAIL_ALLOWLIST: process.env.ADMIN_EMAIL_ALLOWLIST,
 });
 
-const isBuildTime = process.env.npm_lifecycle_event === "build" || process.env.npm_lifecycle_event === "export";
+const isBuildTime =
+  process.env.npm_lifecycle_event === "build" || process.env.npm_lifecycle_event === "export";
 
 if (!parsedEnv.success && !isBuildTime) {
-  console.error("❌ Invalid environment variables:", parsedEnv.error.flatten().fieldErrors);
+  logger.error(
+    { errors: parsedEnv.error.flatten().fieldErrors },
+    "❌ Invalid environment variables:"
+  );
   // We don't throw an error here to allow the server to start (e.g. in dev) without all variables,
   // but it will fail at runtime when accessed if they are missing.
 }

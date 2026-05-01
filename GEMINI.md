@@ -1,9 +1,11 @@
 # VoteWise - Project Context
 
 ## Project Overview
-VoteWise is a production-grade election process education platform. It aims to help citizens understand elections, verify political information, and prepare for voting through interactive simulations and AI-assisted personalized learning. 
+
+VoteWise is a production-grade election process education platform. It aims to help citizens understand elections, verify political information, and prepare for voting through interactive simulations and AI-assisted personalized learning.
 
 **Main Technologies:**
+
 - **Frontend & API:** Next.js 16 (App Router), React 19, TypeScript
 - **Styling & UI:** Tailwind CSS v4, shadcn/ui, Radix UI Primitives, base-ui
 - **State Management:** Zustand (client state), TanStack React Query (server state caching)
@@ -12,14 +14,15 @@ VoteWise is a production-grade election process education platform. It aims to h
 - **AI & Cloud Services:** Google Vertex AI (Gemini 2.5 Flash via `@google/genai`), Google Cloud Text-to-Speech, Google Analytics Data API (GA4), Google Maps JS API.
 
 **Architecture:**
-- The project follows a Next.js App Router architecture. 
+
+- The project follows a Next.js App Router architecture.
 - Core modules are separated into logical directories under `src/modules` (e.g., admin, election, learning-journey) and `src/core` (auth, database, services).
 - Interactions with AI and Databases are abstracted behind repository and service patterns.
 - Protected routes (like `/admin`) and actions validate roles using JWT claims and server-side middleware.
 
 ## Building and Running
 
-**Prerequisites:** Node.js 20+, npm 10+, and a Google Cloud Project with Firestore enabled. 
+**Prerequisites:** Node.js 20+, npm 10+, and a Google Cloud Project with Firestore enabled.
 Make sure environment variables are configured (see `.env.example`).
 
 - **Install Dependencies:** `npm install`
@@ -30,7 +33,7 @@ Make sure environment variables are configured (see `.env.example`).
 ## Testing Commands
 
 - **Unit Tests (Jest):** `npm run test:unit`
-- **End-to-End Tests (Playwright):** 
+- **End-to-End Tests (Playwright):**
   - Run all headless: `npm run test:e2e` or `npm run test`
   - Run headed (visible browser): `npm run test:e2e:headed`
   - Interactive UI mode: `npm run test:e2e:ui`

@@ -293,11 +293,13 @@ VoteWise maintains a comprehensive, production-ready testing suite covering four
 ### Running Tests
 
 Run all tests across all layers:
+
 ```bash
 npm run test:all
 ```
 
 Run specific testing layers:
+
 ```bash
 npm run test:unit         # Run Unit tests via Jest
 npm run test:integration  # Run Integration tests via Jest
@@ -308,21 +310,25 @@ npm run test:e2e          # Run E2E browser tests via Playwright
 ### Playwright E2E Options
 
 Run E2E tests in headed mode (visible browser):
+
 ```bash
 npm run test:e2e:headed
 ```
 
 Open Playwright interactive UI runner:
+
 ```bash
 npm run test:e2e:ui
 ```
 
 Debug a specific test:
+
 ```bash
 npm run test:e2e:debug
 ```
 
 Open Playwright HTML report:
+
 ```bash
 npm run test:e2e:report
 ```
