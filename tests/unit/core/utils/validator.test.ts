@@ -1,3 +1,6 @@
+/**
+ * @jest-environment node
+ */
 import { z } from "zod";
 import { validateRequest } from "@/core/utils/validator";
 

@@ -13,7 +13,10 @@
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:debug": "playwright test --debug",
     "test:e2e:report": "playwright show-report",
-    "test:unit": "jest",
+    "test:api": "playwright test tests/api",
+    "test:unit": "jest --testMatch=\"**/tests/unit/**/*.test.{ts,tsx}\"",
+    "test:integration": "jest --testMatch=\"**/tests/integration/**/*.test.{ts,tsx}\"",
+    "test:all": "npm run test:unit && npm run test:integration && npm run test:e2e",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
@@ -51,15 +54,21 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/jest": "^30.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/supertest": "^7.2.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
     "eslint-config-prettier": "^10.1.8",
     "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "node-mocks-http": "^1.17.2",
     "prettier": "^3.8.3",
+    "supertest": "^7.2.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

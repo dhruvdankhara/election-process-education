@@ -283,32 +283,46 @@ Open http://localhost:3000.
 
 ## Testing
 
-Run all end-to-end tests:
+VoteWise maintains a comprehensive, production-ready testing suite covering four distinct testing layers to ensure reliability:
 
+1. **Unit Testing (Jest):** Tests isolated functions, utilities, and components (e.g., auth logic, validation schemas, formatters).
+2. **Integration Testing (Jest):** Tests interactions between internal modules, database repositories, and service layers using mocked dependencies where necessary.
+3. **API Testing (Playwright):** Tests Next.js API route endpoints directly to ensure correct HTTP status codes, JSON payload structures, and authorization barriers.
+4. **End-to-End (E2E) Testing (Playwright):** Simulates real user browser flows (Login, Dashboard, Learning, AI Chat, Voting Simulation) across Chromium, Firefox, and WebKit.
+
+### Running Tests
+
+Run all tests across all layers:
 ```bash
-npm run test:e2e
+npm run test:all
 ```
 
-Run E2E tests in headed mode (visible browser):
+Run specific testing layers:
+```bash
+npm run test:unit         # Run Unit tests via Jest
+npm run test:integration  # Run Integration tests via Jest
+npm run test:api          # Run API endpoint tests via Playwright
+npm run test:e2e          # Run E2E browser tests via Playwright
+```
 
+### Playwright E2E Options
+
+Run E2E tests in headed mode (visible browser):
 ```bash
 npm run test:e2e:headed
 ```
 
 Open Playwright interactive UI runner:
-
 ```bash
 npm run test:e2e:ui
 ```
 
 Debug a specific test:
-
 ```bash
 npm run test:e2e:debug
 ```
 
 Open Playwright HTML report:
-
 ```bash
 npm run test:e2e:report
 ```
@@ -322,7 +336,8 @@ Current automated suites validate:
 5. AI chat assistant input, response rendering, and error fallback states.
 6. Misinformation detector claim submission, AI response display, and network failure handling.
 7. Voting simulation step-by-step flow, state transitions, and completion state.
-8. Page Object Model (POM) layer for all seven core feature surfaces, ensuring maintainable test authoring.
+8. API endpoints for correct HTTP responses and payload structures.
+9. Page Object Model (POM) layer for all core feature surfaces, ensuring maintainable test authoring.
 
 ## Summary
 

@@ -1,3 +1,6 @@
+/**
+ * @jest-environment node
+ */
 import { asyncHandler } from "@/core/utils/async-handler";
 import { ApiError } from "@/core/utils/api-response";
 import { z } from "zod";
