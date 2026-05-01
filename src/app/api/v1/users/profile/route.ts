@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { asyncHandler } from "@/core/utils/async-handler";
 import { ApiError, ApiResponse } from "@/core/utils/api-response";
+import { parseRequestBody } from "@/core/utils/validator";
 import { requireAuthSession } from "@/core/auth/authorization";
 import { UserProfileRepository } from "@/modules/user/repository/profile.repository";
 
@@ -23,7 +24,7 @@ export const GET = asyncHandler(async () => {
 
 export const POST = asyncHandler(async (req: Request) => {
   const session = await requireAuthSession();
-  const body = await profileSchema.parseAsync(await req.json());
+  const body = await parseRequestBody(req, profileSchema);
   const existing = await profileRepository.findByUserId(session.user.id);
 
   if (existing?.id) {

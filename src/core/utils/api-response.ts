@@ -1,8 +1,8 @@
 export class ApiResponse<T> {
-  success: boolean;
-  data?: T;
-  message?: string;
-  error?: {
+  readonly success: boolean;
+  readonly data?: T;
+  readonly message?: string;
+  readonly error?: {
     code: string;
     message: string;
   };
@@ -32,12 +32,14 @@ export class ApiResponse<T> {
 }
 
 export class ApiError extends Error {
-  code: string;
-  statusCode: number;
+  readonly code: string;
+  readonly statusCode: number;
 
   constructor(code: string, message: string, statusCode: number = 500) {
     super(message);
+    this.name = "ApiError";
     this.code = code;
     this.statusCode = statusCode;
+    Object.setPrototypeOf(this, ApiError.prototype);
   }
 }

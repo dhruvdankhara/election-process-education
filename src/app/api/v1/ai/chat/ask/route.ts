@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { asyncHandler } from "@/core/utils/async-handler";
 import { ApiResponse } from "@/core/utils/api-response";
+import { parseRequestBody } from "@/core/utils/validator";
 
 import { fallbackAiService } from "@/core/services/ai/fallback.service";
 import { VertexService } from "@/core/services/ai/vertex.service";
@@ -21,7 +22,7 @@ const schema = z.object({
 });
 
 export const POST = asyncHandler(async (req: Request) => {
-  const body = await schema.parseAsync(await req.json());
+  const body = await parseRequestBody(req, schema);
 
   if (vertexService.isEnabled()) {
     try {

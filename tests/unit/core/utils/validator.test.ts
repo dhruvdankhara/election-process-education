@@ -20,7 +20,7 @@ describe("validateRequest", () => {
     expect(result).toEqual(validData);
   });
 
-  it("should throw an ApiResponse error when validation fails", async () => {
+  it("should throw an ApiError when validation fails", async () => {
     const invalidData = { name: "Al", age: -5 };
     const req = new Request("http://localhost/api", {
       method: "POST",
@@ -28,19 +28,21 @@ describe("validateRequest", () => {
     });
 
     await expect(validator(req)).rejects.toMatchObject({
-      success: false,
-      error: {
-        code: "VALIDATION_ERROR",
-        message: "Name must be at least 3 characters",
-      },
+      code: "VALIDATION_ERROR",
+      message: "Name must be at least 3 characters",
+      statusCode: 400,
     });
   });
 
-  it("should throw standard errors when request JSON parsing fails", async () => {
+  it("should throw ApiError when request JSON parsing fails", async () => {
     const req = {
-      json: jest.fn().mockRejectedValue(new Error("Syntax error")),
+      json: jest.fn().mockRejectedValue(new SyntaxError("Unexpected token")),
     } as unknown as Request;
 
-    await expect(validator(req)).rejects.toThrow("Syntax error");
+    await expect(validator(req)).rejects.toMatchObject({
+      code: "INVALID_JSON",
+      message: "Invalid JSON payload",
+      statusCode: 400,
+    });
   });
 });

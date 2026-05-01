@@ -22,6 +22,12 @@ export const asyncHandler =
         });
       }
 
+      if (error instanceof SyntaxError) {
+        return NextResponse.json(ApiResponse.error("INVALID_JSON", "Invalid JSON payload"), {
+          status: 400,
+        });
+      }
+
       if (error instanceof z.ZodError) {
         return NextResponse.json(
           ApiResponse.error("VALIDATION_ERROR", error.issues[0]?.message ?? "Invalid input"),

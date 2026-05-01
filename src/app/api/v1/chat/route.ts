@@ -1,18 +1,21 @@
+import { z } from "zod";
 import { VertexService } from "@/core/services/ai/vertex.service";
 import { requireAuthSession } from "@/core/auth/authorization";
-import { ApiError, ApiResponse } from "@/core/utils/api-response";
+import { ApiResponse } from "@/core/utils/api-response";
 import { asyncHandler } from "@/core/utils/async-handler";
 import { fallbackAiService } from "@/core/services/ai/fallback.service";
+import { parseRequestBody } from "@/core/utils/validator";
 
 const vertexService = new VertexService();
 
+const schema = z.object({
+  message: z.string().trim().min(1, "Message is required"),
+});
+
 export const POST = asyncHandler(async (req: Request) => {
   await requireAuthSession();
-  const body = (await req.json()) as { message?: string };
-  const message = body.message?.trim();
-  if (!message) {
-    throw new ApiError("VALIDATION_ERROR", "Message is required", 400);
-  }
+  const body = await parseRequestBody(req, schema);
+  const message = body.message;
 
   if (vertexService.isEnabled()) {
     try {

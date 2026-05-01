@@ -64,6 +64,26 @@ describe("asyncHandler", () => {
     );
   });
 
+  it("should handle invalid JSON errors and return 400 Bad Request", async () => {
+    const handler = async () => {
+      throw new SyntaxError("Unexpected token");
+    };
+    const wrappedHandler = asyncHandler(handler);
+
+    await wrappedHandler(mockRequest);
+
+    expect(NextResponse.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        success: false,
+        error: {
+          code: "INVALID_JSON",
+          message: "Invalid JSON payload",
+        },
+      }),
+      { status: 400 }
+    );
+  });
+
   it("should handle generic Errors and return 500 Internal Server Error", async () => {
     const handler = async () => {
       throw new Error("Unexpected crash");

@@ -3,6 +3,7 @@ import { GenerateJourneyService } from "@/modules/learning-journey/service/creat
 import { asyncHandler } from "@/core/utils/async-handler";
 import { auth } from "@/core/auth/auth";
 import { ApiResponse } from "@/core/utils/api-response";
+import { parseRequestBody } from "@/core/utils/validator";
 import { generateJourneySchema } from "@/modules/learning-journey/validation/journey.schema";
 
 const generateService = new GenerateJourneyService();
@@ -10,7 +11,7 @@ const generateService = new GenerateJourneyService();
 export const POST = asyncHandler(async (req: Request) => {
   const session = await auth();
 
-  const body = await generateJourneySchema.parseAsync(await req.json());
+  const body = await parseRequestBody(req, generateJourneySchema);
 
   // Assuming Zod validation passed correctly
   const result = await generateService.execute(session?.user?.id, {
