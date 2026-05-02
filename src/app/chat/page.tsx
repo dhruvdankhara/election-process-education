@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { chatService } from "@/services/chat.service";
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<{ role: "user" | "ai"; content: string }[]>([
@@ -27,30 +28,19 @@ export default function ChatPage() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/v1/ai/chat/ask", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: userMessage,
-          context: messages.slice(-6).map((item) => ({
-            role: item.role === "ai" ? "assistant" : "user",
-            message: item.content,
-          })),
-        }),
-      });
+      const reply = await chatService.ask(
+        userMessage,
+        messages.slice(-6).map((item) => ({
+          role: item.role === "ai" ? "assistant" : "user",
+          message: item.content,
+        }))
+      );
 
-      if (!res.ok) {
-        throw new Error("Unable to get assistant response");
-      }
-
-      const payload = (await res.json()) as { data?: { reply?: string } };
       setMessages((prev) => [
         ...prev,
         {
           role: "ai",
-          content:
-            payload.data?.reply ??
-            "I could not answer that clearly. Please try again with more context.",
+          content: reply.reply ?? "I could not answer that clearly. Please try again.",
         },
       ]);
     } catch {

@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import { ApiError, ApiResponse } from "@/core/utils/api-response";
 import { z } from "zod";
+import { logger } from "./logger";
 
 type NextRouteHandler<TArgs extends unknown[] = unknown[]> = (
   req: Request,
@@ -27,7 +28,7 @@ export const asyncHandler =
 
       return await handler(req, ...args);
     } catch (error: unknown) {
-      console.error("API Error:", error);
+      logger.error(error, "API Error");
 
       if (error instanceof ApiError) {
         return NextResponse.json(ApiResponse.error(error.code, error.message), {

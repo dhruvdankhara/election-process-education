@@ -2,6 +2,7 @@ import { z } from "zod";
 import { asyncHandler } from "@/core/utils/async-handler";
 import { ApiResponse } from "@/core/utils/api-response";
 import { parseRequestBody } from "@/core/utils/validator";
+import { logger } from "@/core/utils/logger";
 
 import { fallbackAiService } from "@/core/services/ai/fallback.service";
 import { VertexService } from "@/core/services/ai/vertex.service";
@@ -36,7 +37,7 @@ export const POST = asyncHandler(async (req: Request) => {
         return Response.json(ApiResponse.success({ reply }, "AI response generated"));
       }
     } catch (error) {
-      console.error("AI chat generation failed. Falling back to deterministic response.", error);
+      logger.error({ error }, "AI chat generation failed. Falling back to deterministic response.");
     }
   }
 

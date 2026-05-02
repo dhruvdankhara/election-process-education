@@ -62,6 +62,7 @@ export default function LearningPage() {
         setError(loadError instanceof Error ? loadError.message : "Failed to load journeys");
       } finally {
         setLoading(false);
+        generateJourney();
       }
     };
 

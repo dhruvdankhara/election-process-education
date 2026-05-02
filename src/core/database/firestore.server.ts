@@ -1,5 +1,6 @@
 import * as admin from "firebase-admin";
 import { env } from "@/core/config/env";
+import { logger } from "@/core/utils/logger";
 
 const projectId =
   env.FIRESTORE_PROJECT_ID || env.GOOGLE_CLOUD_PROJECT || env.GOOGLE_CLOUD_PROJECT_ID;
@@ -11,9 +12,9 @@ if (!admin.apps.length && projectId) {
       appOptions.credential = admin.credential.applicationDefault();
     }
     admin.initializeApp(appOptions);
-    console.log("Firebase Admin initialized successfully.");
+    logger.info("Firebase Admin initialized successfully.");
   } catch (error) {
-    console.error("Firebase Admin initialization error", error);
+    logger.error({ error }, "Firebase Admin initialization error");
   }
 }
 
@@ -26,7 +27,7 @@ if (admin.apps.length) {
     }
     dbInstance = firestore;
   } catch {
-    console.error("Firestore init skipped");
+    logger.error("Firestore init skipped");
   }
 }
 

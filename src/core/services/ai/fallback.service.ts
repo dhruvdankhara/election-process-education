@@ -1,4 +1,5 @@
 import type { TimelineEvent } from "@/modules/timeline/repository/timeline.repository";
+import { logger } from "@/core/utils/logger";
 
 export interface MisinformationResult {
   verdict: "true" | "false" | "uncertain";
@@ -75,7 +76,7 @@ export const fallbackAiService = {
   },
 
   buildChatReply(message: string) {
-    console.log("Demo chat");
+    logger.info({ message }, "Demo chat");
     const lower = message.toLowerCase();
     if (lower.includes("document")) {
       return "For most cases, keep a valid photo ID, address proof, and any constituency-specific document requirements ready. Verify official local election guidance before submission.";

@@ -3,6 +3,7 @@ import type { GenerateContentParameters } from "@google/genai";
 import { z } from "zod";
 import type { MisinformationResult } from "@/core/services/ai/fallback.service";
 import { env } from "@/core/config/env";
+import { logger } from "@/core/utils/logger";
 
 const DEFAULT_MODEL = "gemini-2.5-flash";
 const GEMINI_API_VERSION = "v1alpha";
@@ -295,7 +296,7 @@ export class VertexService {
     backend: AiBackend,
     error: unknown
   ) {
-    console.error(`[AI] ${operation} failed using ${backend}.`, error);
+    logger.error({ operation, backend, error }, `[AI] ${operation} failed using ${backend}.`);
   }
 
   private async runRequest<T>(

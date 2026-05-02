@@ -130,6 +130,7 @@ export default function AdminTimelinesPage() {
         </CardHeader>
         <CardContent className="grid gap-3 md:grid-cols-2">
           <Input
+            aria-label="Timeline title"
             placeholder="Timeline title"
             value={timelineForm.title}
             onChange={(event) =>
@@ -140,6 +141,7 @@ export default function AdminTimelinesPage() {
             }
           />
           <Input
+            aria-label="Description"
             placeholder="Description"
             value={timelineForm.description}
             onChange={(event) =>
@@ -161,11 +163,13 @@ export default function AdminTimelinesPage() {
         </CardHeader>
         <CardContent className="grid gap-3 md:grid-cols-2">
           <Input
+            aria-label="Event title"
             placeholder="Event title"
             value={eventForm.title}
             onChange={(event) => setEventForm((prev) => ({ ...prev, title: event.target.value }))}
           />
           <Input
+            aria-label="Event description"
             placeholder="Event description"
             value={eventForm.description}
             onChange={(event) =>
@@ -176,16 +180,19 @@ export default function AdminTimelinesPage() {
             }
           />
           <Input
+            aria-label="Event date"
             type="date"
             value={eventForm.date}
             onChange={(event) => setEventForm((prev) => ({ ...prev, date: event.target.value }))}
           />
           <Input
+            aria-label="Type"
             placeholder="Type"
             value={eventForm.type}
             onChange={(event) => setEventForm((prev) => ({ ...prev, type: event.target.value }))}
           />
           <Input
+            aria-label="Importance"
             placeholder="Importance"
             value={eventForm.importance}
             onChange={(event) =>

@@ -72,26 +72,31 @@ export default function AdminElectionsPage() {
         </CardHeader>
         <CardContent className="grid gap-3 md:grid-cols-2">
           <Input
+            aria-label="Election title"
             placeholder="Election title"
             value={form.title}
             onChange={(event) => setForm((prev) => ({ ...prev, title: event.target.value }))}
           />
           <Input
+            aria-label="State"
             placeholder="State"
             value={form.state}
             onChange={(event) => setForm((prev) => ({ ...prev, state: event.target.value }))}
           />
           <Input
+            aria-label="Type"
             placeholder="Type"
             value={form.type}
             onChange={(event) => setForm((prev) => ({ ...prev, type: event.target.value }))}
           />
           <Input
+            aria-label="Country"
             placeholder="Country"
             value={form.country}
             onChange={(event) => setForm((prev) => ({ ...prev, country: event.target.value }))}
           />
           <Input
+            aria-label="Description"
             placeholder="Description"
             value={form.description}
             onChange={(event) => setForm((prev) => ({ ...prev, description: event.target.value }))}

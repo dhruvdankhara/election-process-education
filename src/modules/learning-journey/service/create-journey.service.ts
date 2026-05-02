@@ -2,6 +2,7 @@ import { VertexService } from "@/core/services/ai/vertex.service";
 import { fallbackAiService } from "@/core/services/ai/fallback.service";
 import { translationService } from "@/core/services/translation/translate.service";
 import { LearningJourneyRepository } from "../repository/learning.repository";
+import { logger } from "@/core/utils/logger";
 
 const vertexService = new VertexService();
 const journeyRepository = new LearningJourneyRepository();
@@ -51,7 +52,7 @@ export class GenerateJourneyService {
       try {
         result = await vertexService.generateStructuredPlan(prompt);
       } catch (error) {
-        console.error("Journey generation failed. Falling back to deterministic response.", error);
+        logger.error(error, "Journey generation failed. Falling back to deterministic response.");
         result = undefined;
       }
     }

@@ -2,6 +2,7 @@ import { z } from "zod";
 import { asyncHandler } from "@/core/utils/async-handler";
 import { ApiResponse } from "@/core/utils/api-response";
 import { parseRequestBody } from "@/core/utils/validator";
+import { logger } from "@/core/utils/logger";
 
 import { fallbackAiService } from "@/core/services/ai/fallback.service";
 import { VertexService } from "@/core/services/ai/vertex.service";
@@ -20,9 +21,9 @@ export const POST = asyncHandler(async (req: Request) => {
       const result = await vertexService.generateMisinformationCheck(body.content);
       return Response.json(ApiResponse.success(result, "Misinformation check completed"));
     } catch (error) {
-      console.error(
-        "Misinformation analysis failed. Falling back to deterministic response.",
-        error
+      logger.error(
+        { error },
+        "Misinformation analysis failed. Falling back to deterministic response."
       );
     }
   }
