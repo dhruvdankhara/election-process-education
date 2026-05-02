@@ -21,7 +21,7 @@ export async function SiteHeader() {
         </div>
 
         <div className="flex items-center gap-3">
-          {!session && (
+          {!isLoggedIn && (
             <>
               <Button asChild size="sm" variant="ghost" className="hidden sm:flex">
                 <Link href="/login">
@@ -38,7 +38,7 @@ export async function SiteHeader() {
             </>
           )}
 
-          {session && (
+          {isLoggedIn && (
             <>
               <Button asChild size="sm" variant="outline" className="hidden sm:flex rounded-full">
                 <Link href="/dashboard">

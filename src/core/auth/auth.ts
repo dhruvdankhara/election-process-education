@@ -4,6 +4,7 @@ import { UserRepository, type User } from "@/modules/user/repository/user.reposi
 import { env } from "@/core/config/env";
 
 const userRepository = new UserRepository();
+const sessionCookieName = env.AUTH_COOKIE_NAME ?? "votewise_guide_session";
 const adminAllowlist = new Set(
   (env.ADMIN_EMAIL_ALLOWLIST ?? "")
     .split(",")
@@ -23,21 +24,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   session: { strategy: "jwt" },
   secret: env.AUTH_JWT_SECRET,
-  ...(env.AUTH_COOKIE_NAME
-    ? {
-        cookies: {
-          sessionToken: {
-            name: env.AUTH_COOKIE_NAME,
-            options: {
-              httpOnly: true,
-              sameSite: "lax",
-              path: "/",
-              secure: process.env.NODE_ENV === "production",
-            },
-          },
-        },
-      }
-    : {}),
+  cookies: {
+    sessionToken: {
+      name: sessionCookieName,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+  },
   callbacks: {
     async signIn({ user }) {
       if (user.email) {

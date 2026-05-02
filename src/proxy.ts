@@ -13,7 +13,7 @@ export default auth((req) => {
       },
       "[auth] incoming request"
     );
-  } catch (e) {
+  } catch {
     // ignore logging errors in middleware
   }
   const isLoggedIn = !!session?.user?.id;

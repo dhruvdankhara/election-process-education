@@ -254,7 +254,7 @@ Open http://localhost:3000.
 | GOOGLE_CLOUD_PROJECT            | Yes      | Google Cloud project context                     |
 | GOOGLE_CLOUD_PROJECT_ID         | Yes      | Backwards-compatible alias for project context   |
 | AUTH_JWT_SECRET                 | Yes      | JWT signing secret for session tokens            |
-| AUTH_COOKIE_NAME                | Optional | Session cookie name override                     |
+| AUTH_COOKIE_NAME                | Optional | App-specific session cookie name override        |
 | GOOGLE_OAUTH_CLIENT_ID          | Yes      | Google OAuth client ID                           |
 | GOOGLE_OAUTH_CLIENT_SECRET      | Yes      | Google OAuth client secret                       |
 | GOOGLE_OAUTH_CALLBACK_URL       | Yes      | OAuth callback URL                               |
