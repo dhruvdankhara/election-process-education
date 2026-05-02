@@ -10,7 +10,7 @@ const userRepository = new UserRepository();
 
 export default async function AdminPage() {
   const session = await auth();
-  if (!session) {
+  if (!session?.user?.id) {
     redirect("/login");
   }
   if (session.user.role !== "admin") {

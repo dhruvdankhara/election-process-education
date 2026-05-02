@@ -1,9 +1,22 @@
 import { auth } from "@/core/auth/auth";
 import { NextResponse } from "next/server";
+import { logger } from "@/core/utils/logger";
 
 export default auth((req) => {
   const { nextUrl, auth: session } = req;
-  const isLoggedIn = !!session;
+  try {
+    logger.info(
+      {
+        host: req.headers.get("host"),
+        href: nextUrl.href,
+        nextauth_env: process.env.NEXTAUTH_URL ?? process.env.AUTH_URL,
+      },
+      "[auth] incoming request"
+    );
+  } catch (e) {
+    // ignore logging errors in middleware
+  }
+  const isLoggedIn = !!session?.user?.id;
 
   const isAuthPage =
     nextUrl.pathname.startsWith("/login") || nextUrl.pathname.startsWith("/register");

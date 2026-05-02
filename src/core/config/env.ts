@@ -51,6 +51,7 @@ const envSchema = z.object({
   GOOGLE_TTS_VOICE_NAME: z.string().default("en-IN-Standard-B"),
   GOOGLE_APPLICATION_CREDENTIALS: optionalString,
   ADMIN_EMAIL_ALLOWLIST: optionalString,
+  NEXTAUTH_URL: z.preprocess(emptyStringToUndefined, z.string().url().optional()),
 });
 
 // To provide meaningful error messages during local development if things are missing
@@ -76,6 +77,7 @@ const parsedEnv = envSchema.safeParse({
   GOOGLE_TTS_VOICE_NAME: process.env.GOOGLE_TTS_VOICE_NAME,
   GOOGLE_APPLICATION_CREDENTIALS: process.env.GOOGLE_APPLICATION_CREDENTIALS,
   ADMIN_EMAIL_ALLOWLIST: process.env.ADMIN_EMAIL_ALLOWLIST,
+  NEXTAUTH_URL: process.env.NEXTAUTH_URL ?? process.env.AUTH_URL,
 });
 
 const isBuildTime =
@@ -88,6 +90,15 @@ if (!parsedEnv.success && !isBuildTime) {
   );
   // We don't throw an error here to allow the server to start (e.g. in dev) without all variables,
   // but it will fail at runtime when accessed if they are missing.
+}
+
+if (!isBuildTime && process.env.NODE_ENV === "production") {
+  const nextAuthUrl = process.env.NEXTAUTH_URL ?? process.env.AUTH_URL;
+  if (!nextAuthUrl) {
+    logger.warn(
+      "Environment variable NEXTAUTH_URL (or AUTH_URL) is not set. In production this causes Auth.js to reject requests from untrusted hosts. Set NEXTAUTH_URL to your production URL."
+    );
+  }
 }
 
 export const env = parsedEnv.success ? parsedEnv.data : ({} as z.infer<typeof envSchema>);

@@ -6,11 +6,11 @@ import { LayoutDashboard, LogIn, UserPlus, LogOut } from "lucide-react";
 
 export async function SiteHeader() {
   const session = await auth();
-  const isLoggedIn = !!session;
+  const isLoggedIn = !!session?.user?.id;
   const isAdmin = session?.user?.role === "admin";
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/60">
       <div className="container mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4">
         <div className="flex items-center gap-2 md:gap-6">
           {/* Mobile Nav is inside MainNav */}
